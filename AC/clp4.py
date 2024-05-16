@@ -25,6 +25,13 @@ class Cart:
         self.total = sum(p.price for p in self.products)
         return self.total
 
+def calc_change(total, pay):
+    if total == pay:
+        return 0 
+    if total % 5 == 0:
+        ...
+
+    ...
 
 def main():
     cart = Cart()
