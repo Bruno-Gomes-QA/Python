@@ -1,4 +1,6 @@
 import random # Biblioteca para gerar aletoriaridade ao programa.
+import math # Biblioteca para calculos.
+
 
 class Product:
 # Classe para gerenciar o objeto Produto.
@@ -22,16 +24,34 @@ class Cart:
         self.products.append(product)
     
     def calculate(self):
-        self.total = sum(p.price for p in self.products)
+        self.total = round(sum(p.price for p in self.products), 2)
         return self.total
 
-def calc_change(total, pay):
-    if total == pay:
-        return 0 
-    if total % 5 == 0:
-        ...
+def calc_change(total, value):
+    trocos = {
+        5: 0,
+        2: 0,
+        1: 0,
+        0.5: 0,
+        0.25: 0,
+        0.10: 0,
+        0.05: 0,
+        0.01: 0
+    }
 
-    ...
+    if total == value:
+        return 'Não há Troco'
+    if total > value:
+        return f'Falta - R$ {total - value:.2f}'
+
+    change = round(value - total, 2)
+
+    for troco in trocos:
+        trocos[troco] += change // troco
+        change = change % troco
+
+    return trocos
+
 
 def main():
     cart = Cart()
@@ -44,6 +64,9 @@ def main():
         print(product)
 
     total = cart.calculate()
-    print(f"\nTotal: {total:.2f}\n")
+    print(f"\nTotal: R$ {total:.2f}")
+    print('Valor Recebido: R$ 50')
+    print(f'Troco: {50 - total}\n')
+    print(calc_change(total, 50))
 
 main()
